@@ -1,0 +1,118 @@
+/* static/css/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre las filas */
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff; /* Fondo sólido para evitar transparencia */
+    overflow: visible; /* Asegura que no se corte el dropdown */
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el texto fijo y el input */
+    overflow: visible; /* Asegura que no se corte el dropdown */
+}
+
+.fixed-text {
+    min-width: 120px; /* Ancho fijo para el texto */
+    font-weight: bold;
+    white-space: nowrap; /* Asegura que el texto fijo no se parta en varias líneas */
+}
+
+/* Asegura un contexto de apilamiento correcto */
+.autocomplete {
+    position: relative; /* Define un contexto para posicionar el dropdown */
+    flex: 1;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+}
+
+.autocomplete input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box; /* Asegura que el padding no afecte al tamaño total */
+}
+
+/* Dropdown */
+[id^="autocomplete-results-"] {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff; /* Fondo blanco sólido */
+    position: absolute; /* Importante: asegura que el dropdown esté posicionado sobre otros elementos */
+    width: 100%; /* Asegura que el dropdown tenga el mismo ancho que el input */
+    z-index: 1000; /* Asegura que esté al frente de otros elementos */
+    max-height: 150px;
+    overflow-y: auto; /* Habilita scroll si hay demasiadas opciones */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Añade sombra para separación visual */
+}
+
+/* Estilo de los items del dropdown */
+[id^="autocomplete-results-"] li {
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box; /* Asegura que el padding no afecte al tamaño total */
+}
+
+[id^="autocomplete-results-"] li:hover {
+    background-color: #d0e8ff;
+}
+
+/* Resaltar la opción seleccionada */
+[id^="autocomplete-results-"] li.highlighted {
+    background-color: #a7c8f2; /* Color de fondo para la opción seleccionada */
+    color: #000; /* Color del texto */
+}
+
+
+/* Para evitar el espacio adicional al usar 'display: none' */
+.autocomplete-results {
+    display: none; /* Por defecto, los dropdowns están ocultos */
+}
+
+/* Hacer que los dropdowns siempre se alineen bien con el input */
+.autocomplete input:focus + .autocomplete-results,
+.autocomplete input:not(:focus) + .autocomplete-results {
+    width: 100%; /* Asegura que el dropdown tenga el mismo ancho que el input */
+}
+
+.button {
+    display: flex;
+    justify-content: center;  /* Centra el botón horizontalmente */
+    align-items: center;      /* Centra el botón verticalmente */
+}
+
+/* Set button colors */
+.fill {
+    --color: #a972cb;
+    --hover: #b97fe2; /* Ajusta el color al gusto */
+    color: var(--color);
+    border: 2px solid var(--color);
+    padding: 1em 2em;
+    font: inherit;
+    background: none;
+    line-height: 1;
+    transition: 0.25s;
+    display: flex;
+    margin: 1.0em; /* Espaciado alrededor del botón */
+}
+  
+.fill:hover,
+.fill:focus {
+    box-shadow: inset 0 0 0 2em var(--hover);
+    border-color: var(--hover);
+    color: #fff;
+}
+  
