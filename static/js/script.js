@@ -2,9 +2,10 @@ $(document).ready(function () {
     // Objeto para llevar un registro de si cada input ha sido modificado
     const inputState = {};
 
-    function setupAutocomplete(inputId, resultsId) {
+    function setupAutocomplete(inputId, resultsId, isCasa) {
         const input = $(`#${inputId}`);
         const results = $(`#${resultsId}`);
+        let ruta = isCasa ?  "/autocompleteCasa" : "/autocompleteSigno"
         let selectedIndex = -1; // Índice para la navegación con teclado
 
         // Inicializa el estado del campo
@@ -16,7 +17,7 @@ $(document).ready(function () {
             inputState[inputId].isSelected = false; // Resetear la bandera cuando el usuario escribe
             inputState[inputId].value = query; // Actualiza el valor que el usuario está escribiendo
             if (query.length > 0) {
-                $.get("/autocomplete", { q: query }, function (data) {
+                $.get(ruta, { q: query }, function (data) {
                     results.empty(); // Limpia resultados previos
                     selectedIndex = -1; // Reinicia el índice
                     data.forEach(function (word) {
@@ -33,7 +34,7 @@ $(document).ready(function () {
         // Al hacer clic en el input, cargar todos los resultados
         input.on("focus", function () {
             if (!inputState[inputId].isSelected) { // Solo cargar todos los resultados si no se ha seleccionado nada
-                $.get("/autocomplete", function (data) {
+                $.get(ruta, function (data) {
                     results.empty(); // Limpia resultados previos
                     selectedIndex = -1; // Reinicia el índice
                     data.forEach(function (word) {
@@ -118,6 +119,43 @@ $(document).ready(function () {
     $(".autocomplete input").each(function (index) {
         const inputId = $(this).attr("id");
         const resultsId = `autocomplete-results-${index + 1}`;
-        setupAutocomplete(inputId, resultsId);
+        const isQuiron = index === 12-1;
+        setupAutocomplete(inputId, resultsId, isQuiron ? true : false);
+    });
+
+    // Función para capturar el clic en el botón "Interpretar"
+    $("#interpretar-btn").on("click", function (e) {
+        e.preventDefault(); // Previene el comportamiento predeterminado (si lo hay)
+        let inputValues = {};
+        let isEmpty = false;
+
+        // Iterar sobre cada input con la clase .autocomplete input
+        $(".autocomplete input").each(function () {
+            const inputId = $(this).attr("id"); // Obtener el ID del input
+            const value = $(this).val(); // Obtener el valor del input
+
+            // Almacenar el valor en el objeto inputValues con el ID del input como clave
+            inputValues[inputId] = value;
+
+            if(value.trim()==="") {
+                isEmpty = true;
+            }
+        });
+
+        // Si algún campo está vacío, mostrar un mensaje y detener la ejecución
+        if (isEmpty) {
+            alert("Por favor, completa todos los campos antes de interpretar."); //marina cambiar este alert
+            return; // Detener la ejecución de la función
+        }
+        // Ahora inputValues contiene los valores de todos los inputs
+        // Aquí puedes procesarlos (ejemplo: mostrar en la consola)
+        console.log(inputValues); // Muestra los valores en la consola
+
+        // Enviar los datos mediante AJAX
+        $.post('/result', inputValues, function(response) {
+            console.log('Respuesta del servidor:', response);
+            // Si quieres redirigir a la página de resultados después de recibir la respuesta:
+            window.location.href = '/result_page';  // No hace falta redirigir manualmente
+        });
     });
 });
