@@ -74,8 +74,23 @@ def show_result():
     pluton = input_values['autocomplete-input-11']
     quiron = input_values['autocomplete-input-12']
 
+    context = {
+        'sol': sol,
+        'luna': luna,
+        'ascendente': ascendente,
+        'mercurio' : mercurio,
+        'venus': venus,
+        'marte': marte,
+        'jupiter': jupiter,
+        'saturno': saturno,
+        'urano': urano,
+        'neptuno': neptuno,
+        'pluton': pluton,
+        'quiron': quiron
+    }
+
     # Pasar los datos a la plantilla
-    return render_template('result.html', sol=sol, luna=luna, ascendente=ascendente, mercurio=mercurio, venus=venus, marte=marte, jupiter=jupiter, saturno=saturno, urano=urano, neptuno=neptuno, pluton=pluton, quiron=quiron)
+    return render_template('result.html', **context)
 
 if __name__ == "__main__":
     app.run(debug=True)
