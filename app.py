@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from collections import OrderedDict
+from significados import *
 app = Flask(__name__)
 
 """
@@ -11,15 +12,6 @@ planetas
 quiron
 casas
 """
-
-
-# Banco de palabras para el autocompletado
-#signos = ["Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"]
-signos = ["Aries", "Acuario", "Cancer", "Capricornio", "Escorpio", "Geminis", "Leo", "Libra", "Piscis" ,  "Sagitario", "Tauro",  "Virgo"]
-
-casasSignos = ["Casa 1 (Aries)", "Casa 2 (Tauro)", "Casa 3 (Geminis)", "Casa 4 (Cancer)", "Casa 5 (Leo)", "Casa 6 (Virgo)", "Casa 7 (Libra)", "Casa 8 (Escorpio)", "Casa 9 (Sagitario)", "Casa 10 (Capricornio)", "Casa 11 (Acuario)", "Casa 12 (Piscis)"]
-#marina
-casas = ["Casa 1", "Casa 2", "Casa 3", "Casa 4", "Casa 5", "Casa 6", "Casa 7", "Casa 8", "Casa 9", "Casa 10", "Casa 11", "Casa 12"]
 
 @app.route("/") 
 def index():
@@ -74,8 +66,15 @@ def show_result():
     pluton = input_values['autocomplete-input-11']
     quiron = input_values['autocomplete-input-12']
 
+
+
     context = {
+        'solGeneral': soles["general"],
         'sol': sol,
+        'solCaracteristicas': soles[sol][0],
+        'viaje': soles[sol][1],
+        'talentos': soles[sol][2],
+        'retos':soles[sol][3],
         'luna': luna,
         'ascendente': ascendente,
         'mercurio' : mercurio,
