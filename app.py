@@ -71,7 +71,7 @@ def show_result():
     context = {
         'solGeneral': soles["general"],
         'sol': sol,
-        'solCaracteristicas': soles[sol][0],
+        'solElemento': soles[sol][0],
         'viaje': soles[sol][1],
         'talentos': soles[sol][2],
         'retos':soles[sol][3],
